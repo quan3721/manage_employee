@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h3 class="pt-5 text-center">Management Employee</h3><br>
+<div class="row">
+    <div class="col-md-6">
+
+        <form class="shadow p-3 row g-3" action="{% url 'insert' %}" method="POST">
+
+            <h4>Add New Employee</h4>
+            {% csrf_token %}
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterID" name="enterID" placeholder="Enter Employee's ID">
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterName" name="enterName" placeholder="Enter Employee's Name">
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterDOB" name="enterDOB" placeholder="Enter Employee's Date of Birth">
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterPosition" name="enterPosition" placeholder="Enter Employee's Position">
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="number" class="form-control" id="enterYear" name="enterYear" placeholder="Enter Employee's Starting Year">
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterAddress" name="enterAddress" placeholder="Enter Employee's Adress">
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-primary" id="insert" name="insert">INSERT</button>
+                <!-- <button class="btn btn-success" id="update" name="update">UPDATE</button>
+                <button class="btn btn-danger" id="remove" name="remove">REMOVE</button> -->
+            </div>
+
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <form class="shadow p-3 row g-3" action="{% url 'find' %}" method="POST">
+            {% csrf_token %}
+            <h4>Find Employee</h4>
+            <div class="form-group col-md-4">
+
+            </div>
+            <div class="form-group col-md-4">
+                <input type="text" class="form-control" id="findID" name="findID" placeholder="Enter Employee's ID">
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit" id="find">FIND</button>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+    <div class="container mt-3">
+        <table class="table table-dark" id="data_table">
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Date of Birth</th>
+                <th>Position</th>
+                <th>Starting Year</th>
+                <tbody id="tbody1"></tbody>
+            </thead>
+            <tbody class="table" id="tablebody">
+                <!-- <tr>
+                    <td id="showID"></td>
+                    <td>Nguyen Dinh Hong Quan</td>
+                    <td>TD</td>
+                    <td>30-07-2001</td>
+                    <td>IT Software</td>
+                    <td>2023</td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

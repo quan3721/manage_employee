@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h3 class="pt-5 text-center">Management Employee</h3><br>
+<div class="row">
+    <div class="col-md-6">
+        
+        <form class="shadow p-3 row g-3" action="{% url 'insert' %}" method="POST">
+
+            <h4>Add New Employee</h4>
+            {% csrf_token %}
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterID" name="enterID" placeholder="Enter Employee's ID">  
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterName" name="enterName" placeholder="Enter Employee's Name">  
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterDOB" name="enterDOB" placeholder="Enter Employee's Date of Birth"> 
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterPosition" name="enterPosition" placeholder="Enter Employee's Position">
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="number" class="form-control" id="enterYear" name="enterYear" placeholder="Enter Employee's Starting Year">
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="enterAddress" name="enterAddress" placeholder="Enter Employee's Adress">
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-primary" id="insert" name="insert">INSERT</button>
+                <button class="btn btn-success" id="update" name="update">UPDATE</button>
+                <!-- <button class="btn btn-danger" id="remove" name="remove">REMOVE</button> -->
+            </div>
+
+        </form>
+     </div>
+
+    <div class="col-md-6 shadow p-3 row g-3">
+
+        <h4>Find Employee</h4>
+        <div class="form-group col-md-4">
+        </div>
+        <div class="form-group col-md-4">
+            <input type="text" class="form-control" id="findID" placeholder="Enter Employee's ID">
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit" id="find">FIND</button>
+            <h5 id="findName" type="text"></h5>
+            <h5 id="findDOB" type="text"></h5>
+            <h5 id="findPosition" type="text"></h5>
+            <h5 id="findYear" type="number"></h5>
+            <h5 id="findAdress" type="text"></h5>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6 shadow p-3 row g-3">
+
+        <h4>Delete Employee</h4>
+        <div class="form-group col-md-4">
+        </div>
+        <div class="form-group col-md-4">
+            <input type="text" class="form-control" id="deleteID" placeholder="Enter Employee's ID">
+        </div>
+        <div class="col-12">
+            <button class="btn btn-danger" type="submit" id="delete">DELETE</button>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+    <div class="card" >
+        <div class="car-header">
+            <h1>ALL EMPLOYEE</h1>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for emp in employee %}
+
+        <div class="col">
+
+            <div class="card">
+                
+                {% for x,y in emp.items %}
+                    <div class="card-body">
+                        {{x}}:  {{y}}
+                    </div>
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+</div>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAGxlNqHpBsLGS6VqgQM2W5TfMPYAppcc4",
+            authDomain: "attendance-system-f3c35.firebaseapp.com",
+            databaseURL: "https://attendance-system-f3c35-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "attendance-system-f3c35",
+            storageBucket: "attendance-system-f3c35.appspot.com",
+            messagingSenderId: "583243067002",
+            appId: "1:583243067002:web:7546293b13e514c97015c3",
+            measurementId: "G-MP8VF3KBNF"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        import {getDatabase, set, get, update, remove, ref, child}
+        from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+        const db = getDatabase(app);
+
+        var findBtn = document.getElementById("find");
+        var deleteBtn = document.getElementById("delete")
+
+
+        function FindData() {
+            const dbref = ref(db);
+
+            get(child(dbref, "Employee/" + findID.value))
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    findName.innerHTML = "Name: " + snapshot.val().Name;
+                    findAdress.innerHTML = "Adress: " + snapshot.val().Address;
+                    findPosition.innerHTML = "Position: " + snapshot.val().Position;
+                    findYear.innerHTML = "Starting Year: " + snapshot.val().Starting_Year;
+                    findDOB.innerHTML = "Date of Birth: " + snapshot.val().Date_of_Birth;
+                } else {
+                    alert("No data found");
+                }
+            })
+            .catch((error)=>{
+                alert(error);
+            })
+
+        }
+
+        function RemoveData(){
+            remove(ref(db, "Employee/"+ deleteID.value))
+            .then(()=>{
+                alert("Data deleted successfully");
+            })
+            .catch((error)=>{
+                alert(error);
+            });
+
+            remove(ref(db, "Employee_sub/"+ deleteID.value))
+            .then(()=>{
+                alert("Data deleted successfully");
+            })
+            .catch((error)=>{
+                alert(error);
+            });
+        }
+
+
+        findBtn.addEventListener('click', FindData);
+        deleteBtn.addEventListener('click', RemoveData);
+
+    </script>
+
+
+{% endblock %}
