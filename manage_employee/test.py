@@ -17,8 +17,7 @@ firebase.storage()
 
 employee = db.child('Employee_sub/1').get().val()
 print(employee)
-for v,y in employee.items():
-    print(y)
+print(employee['Address'])
 
 # print(employee)
 # for emp in employee:

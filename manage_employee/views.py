@@ -18,8 +18,11 @@ firebase.storage()
 def index(request):
 
     employee = db.child('Employee_sub').get()
+    employee_m = db.child('Employee').get()
     context = {
         'employee': employee.val(),
+        'employee_m': employee_m.val(),
+        
     }
 
 

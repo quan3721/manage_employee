@@ -89,24 +89,30 @@
     </div>
 
     <div class="row row-cols-1 row-cols-md-4 g-4">
-        {% for emp in employee %}
 
+        {% for emp_m in employee_m %}
         <div class="col">
 
             <div class="card">
-                
-                {% for x,y in emp.items %}
+                    
                     <div class="card-body">
-                        {{x}}:  {{y}}
+                        Name:  {{emp_m.Name}} <br>
+                        Address:  {{emp_m.Address}} <br>
+                        ID:  {{emp_m.ID}} <br>
+                        Date of Birth:  {{emp_m.Date_of_Birth}}<br>
+                        Position:  {{emp_m.Position}}<br>
+                        Starting Year:  {{emp_m.Starting_Year}}<br>
+                        Total attendance in Month:  {{emp_m.Total_attendance_in_Month}}<br>
                     </div>
-                {% endfor %}
+
+                   
 
 
             </div>
 
         </div>
-
         {% endfor %}
+
 </div>
 
 

@@ -42,11 +42,10 @@ def add_new_employee(request):
         context_sub = {
             "ID": id,
             "Address": address,
-            "Date_of Birth": dob,
+            "Date_of_Birth": dob,
             "Name": name,
             "Position": position,
             "Starting_Year": year,
-            "Total_attendance_in_Month": 0,
         }
 
 
@@ -55,5 +54,8 @@ def add_new_employee(request):
         db.child(f"Employee_sub/{id}").set(context_sub)
 
         return redirect('index')
-
+    
+    
+    
+    
     return render(request, 'index.html')
